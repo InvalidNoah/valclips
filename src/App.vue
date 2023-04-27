@@ -3,10 +3,6 @@
 
 <template>
   <div>
-    <h1 class="font-bold text-center">ValClips</h1>
+      <router-view></router-view>
   </div>
 </template>
-
-<style scoped>
-
-</style>
