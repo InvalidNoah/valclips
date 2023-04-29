@@ -18,6 +18,7 @@
 <script>
 import {useVideoStore} from "../store/store.ts";
 import VideoCardSkeleton from "./skeleton/VideoCardSkeleton.vue";
+import * as api from "../assets/api.ts"
 
 export default {
     name: "VideoCard",
@@ -51,14 +52,12 @@ export default {
         }
     },
     mounted() {
-        fetch("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=" + this.video_id + "&format=json")
-            .then(response => response.json())
-            .then(data => {
-                this.video_data = {
-                    id: this.video_id,
-                    ...data
-                }
-            })
+        api.getVideoData(this.video_id).then(data => {
+            this.video_data = {
+                ...this.video_data,
+                ...data
+            }
+        });
     },
     methods: {
         setVideo() {

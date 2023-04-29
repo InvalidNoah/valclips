@@ -120,6 +120,7 @@ import VideoPlayer from "../components/VideoPlayer.vue";
 import {useVideoStore} from "../store/store.ts";
 import Navbar from "../components/Navbar.vue";
 import VideoCardSkeleton from "../components/skeleton/VideoCardSkeleton.vue";
+import * as api from "../assets/api.ts"
 
 export default {
     name: "ReviewView",
@@ -169,14 +170,13 @@ export default {
 
             this.isLoadingClips = true;
 
-            fetch("https://valclips-db.hop.sh/clips?startIndex=" + this.lastIndex + "&endIndex=" + (this.lastIndex + clips)).then(res => res.json()).then(data => {
+            api.getAllClips(this.lastIndex, this.lastIndex + clips).then(data => {
                 data = data.filter(clip => clip.approved === 0)
                 this.loadedClips = this.loadedClips.concat(data)
                 this.lastIndex += clips
-
-                this.isLoadingClips = false;
             }).catch(err => {
                 console.error(err)
+            }).finally(() => {
                 this.isLoadingClips = false;
             })
         },
@@ -186,58 +186,41 @@ export default {
             this.loadClips(20);
         },
         approveClip() {
-            const headers = new Headers();
-            headers.append("key", localStorage.getItem("approve_key"));
-
-            fetch("https://valclips-db.hop.sh/approve/" + this.videoStore.video_data.id, {
-                method: "POST",
-                headers: headers
-            }).then(() => {
+            api.approveVideo(this.videoStore.video_data.id, localStorage.getItem("approve_key")).then(() => {
                 this.reloadClips();
                 this.videoStore.setPlaying(false);
 
-                this.popup = {
-                    title: "Clip Approved",
-                    message: "The clip has been approved and will be added to the database.",
-                    button: "Ok"
-                }
-                this.openPopup = true;
+                this.openDialog(
+                    "Clip Approved",
+                    "The clip has been approved and will be added to the database.",
+                    "Ok"
+                );
             }).catch(err => {
                 console.error(err)
-                this.popup = {
-                    title: "Error",
-                    message: "An error occurred while approving the clip.",
-                    button: "Ok"
-                }
-                this.openPopup = true;
+                this.openDialog(
+                    "Error",
+                    "An error occurred while approving the clip.",
+                    "Ok"
+                )
             })
         },
         rejectClip() {
-            const headers = new Headers();
-            headers.append("key", localStorage.getItem("delete_key"));
-
-            fetch("https://valclips-db.hop.sh/delete/" + this.videoStore.video_data.id, {
-                method: "POST",
-                headers: headers
-            }).then(() => {
+            api.deleteVideo(this.videoStore.video_data.id, localStorage.getItem("delete_key")).then(() => {
                 this.reloadClips();
                 this.videoStore.setPlaying(false);
-
-                this.popup = {
-                    title: "Clip Rejected",
-                    message: "The clip has been rejected and will not be added to the database.",
-                    button: "Ok"
-                }
-                this.openPopup = true;
+                this.openDialog(
+                    "Clip Rejected",
+                    "The clip has been rejected and will not be added to the database.",
+                    "Ok"
+                );
             }).catch(err => {
                 console.error(err)
-                this.popup = {
-                    title: "Error",
-                    message: "An error occurred while rejecting the clip.",
-                    button: "Ok"
-                }
-                this.openPopup = true;
-            })
+                this.openDialog(
+                    "Error",
+                    "An error occurred while rejecting the clip.",
+                    "Ok"
+                );
+            });
         },
         closePlayer() {
             this.isPlayerOpen = false;
@@ -245,6 +228,14 @@ export default {
         },
         openPlayer() {
             this.isPlayerOpen = true;
+        },
+        openDialog(title, message, button) {
+            this.popup = {
+                title: title,
+                message: message,
+                button: button
+            }
+            this.openPopup = true;
         }
     }
 }

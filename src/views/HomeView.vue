@@ -111,6 +111,7 @@ import VideoPlayer from "../components/VideoPlayer.vue";
 import {useVideoStore} from "../store/store.ts";
 import Navbar from "../components/Navbar.vue";
 import VideoCardSkeleton from "../components/skeleton/VideoCardSkeleton.vue";
+import * as api from "../assets/api.ts"
 
 export default {
     name: "HomeView",
@@ -149,25 +150,21 @@ export default {
         if (this.$route.query.success === "true") {
             this.$router.replace({query: {}})
 
-            this.popup =  {
-                title: "Clip submitted!",
-                message: "Your clip has been submitted for review. It will be added to the site shortly.",
-                button: "Got it, thanks!"
-            }
-
-            this.openPopup = true
+            this.openDialog(
+                "Clip submitted!",
+                "Your clip has been submitted for review. It will be added to the site shortly.",
+                "Got it, thanks!"
+            )
         }
 
         if (this.$route.query.reason === "exists") {
             this.$router.replace({query: {}})
 
-            this.popup =  {
-                title: "Clip already exists!",
-                message: "This clip has already been submitted to the site.",
-                button: "Got it"
-            }
-
-            this.openPopup = true
+            this.openDialog(
+                "Clip already exists!",
+                "This clip has already been submitted to the site.",
+                "Got it"
+            )
         }
 
         window.addEventListener('scroll', () => {
@@ -184,15 +181,15 @@ export default {
 
             this.isLoadingClips = true;
 
-            fetch("https://valclips-db.hop.sh/clips-approved?startIndex=" + this.lastIndex + "&endIndex=" + (this.lastIndex + clips)).then(res => res.json()).then(data => {
+            api.getApprovedClips(this.lastIndex, this.lastIndex + clips).then(data => {
                 this.loadedClips.push(...data)
                 this.lastIndex += clips
-
-                this.isLoadingClips = false;
             }).catch(err => {
                 console.error(err)
+            }).finally(() => {
                 this.isLoadingClips = false;
-            })
+            });
+
         },
         closePlayer() {
             this.isPlayerOpen = false;
@@ -200,7 +197,16 @@ export default {
         },
         openPlayer() {
             this.isPlayerOpen = true;
-        }
+        },
+        openDialog(title, message, button) {
+            this.popup = {
+                title: title,
+                message: message,
+                button: button
+            }
+
+            this.openPopup = true
+        },
     }
 }
 </script>
