@@ -44,7 +44,7 @@
                                     </div>
 
                                     <div class="text-gray-300 text-sm">
-                                        By submitting a clip, you agree to the <a href="https://valclips.com/terms" target="_blank" class="text-blue-500 hover:underline">Terms of Service</a> and <a href="https://valclips.com/privacy" target="_blank" class="text-blue-500 hover:underline">Privacy Policy</a>.
+                                        By submitting a clip, you agree to the <a href="/terms" target="_blank" class="text-blue-500 hover:underline">Terms of Service</a> and <a href="/privacy" target="_blank" class="text-blue-500 hover:underline">Privacy Policy</a>.
                                     </div>
 
                                     <div class="mt-4 flex">
