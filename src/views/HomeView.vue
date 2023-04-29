@@ -4,9 +4,9 @@
     <!-- Video Cards -->
     <div class="container">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-4">
-            <VideoCardSkeleton v-for="i in 20" v-if="loadedClips.length <= 0"/>
+            <VideoCardSkeleton v-if="loadedClips.length <= 0" v-for="i in 20"/>
 
-            <VideoCard v-for="video in loadedClips"
+            <VideoCard v-else v-for="video in loadedClips"
                        :key="video.video_id"
                        :video_id="video.video_id"
                        :views="video.views"
