@@ -178,7 +178,7 @@ export default {
             const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
             if (scrollTop + clientHeight >= scrollHeight) {
-                this.loadClips(5);
+                this.loadClips(10);
             }
         });
 
