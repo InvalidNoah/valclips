@@ -31,16 +31,20 @@
                             <div class="mt-2">
                                 <form action="https://valclips-db.hop.sh/submit" method="post">
                                     <div class="mb-3">
-                                        <label for="author" class="text-gray-200">Submitter</label>
-                                        <input type="text" id="author" name="author" class="w-full px-3 py-2 rounded-lg bg-[#2e2e2e] border border-transparent focus:border-blue-500 focus:outline-none focus:shadow-outline-blue" placeholder="Enter submitter name" maxlength="30" required>
+                                        <label for="author" class="text-gray-200">Username</label>
+                                        <input type="text" id="author" name="author" class="w-full px-3 py-2 rounded-lg bg-[#2e2e2e] border border-transparent focus:border-blue-500 focus:outline-none focus:shadow-outline-blue" placeholder="Enter username" maxlength="30" required>
                                     </div>
-                                    <div class="mb-4">
-                                        <label for="video_id" class="text-gray-200">YouTube Video URL</label>
+                                    <div class="mb-3">
+                                        <label for="video_id" class="text-gray-200">YouTube Video URL (2 minute max)</label>
                                         <input type="text" id="video_id" name="video_id" class="w-full px-3 py-2 rounded-lg bg-[#2e2e2e] border border-transparent focus:border-blue-500 focus:outline-none focus:shadow-outline-blue" placeholder="Enter the YouTube video url" autocomplete="off" required>
                                     </div>
 
-                                    <div>
+                                    <div class="mb-2">
                                         <VueTurnstile site-key="0x4AAAAAAAETCDBYh9DTANun" v-model="turnstileToken" />
+                                    </div>
+
+                                    <div class="text-gray-300 text-sm">
+                                        By submitting a clip, you agree to the <a href="https://valclips.com/terms" target="_blank" class="text-blue-500 hover:underline">Terms of Service</a> and <a href="https://valclips.com/privacy" target="_blank" class="text-blue-500 hover:underline">Privacy Policy</a>.
                                     </div>
 
                                     <div class="mt-4 flex">
