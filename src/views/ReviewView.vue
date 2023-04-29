@@ -1,11 +1,11 @@
 <template>
     <Navbar/>
 
-    <!-- Video Cards -->
+  <!-- Video Cards -->
     <div class="container">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-4">
-            <VideoCardSkeleton v-for="i in 20" v-if="loadedClips.length <= 0"/>
+        <h1 v-if="loadedClips.length <= 0" class="text-2xl text-white text-center mt-4">No clips to review</h1>
 
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-4">
             <VideoCard v-for="video in loadedClips"
                        :key="video.video_id"
                        :video_id="video.video_id"
@@ -16,18 +16,18 @@
         </div>
     </div>
 
-    <!-- Video Player -->
+  <!-- Video Player -->
     <div>
         <TransitionRoot appear :show="isPlayerOpen" as="template">
             <Dialog as="div" @close="closePlayer" class="relative z-10">
                 <TransitionChild
-                    as="template"
-                    enter="duration-300 ease-out"
-                    enter-from="opacity-0"
-                    enter-to="opacity-100"
-                    leave="duration-200 ease-in"
-                    leave-from="opacity-100"
-                    leave-to="opacity-0"
+                        as="template"
+                        enter="duration-300 ease-out"
+                        enter-from="opacity-0"
+                        enter-to="opacity-100"
+                        leave="duration-200 ease-in"
+                        leave-from="opacity-100"
+                        leave-to="opacity-0"
                 >
                     <div class="fixed inset-0 bg-black bg-opacity-25" />
                 </TransitionChild>
@@ -35,16 +35,25 @@
                 <div class="fixed inset-0 overflow-y-auto">
                     <div class="flex min-h-full items-center justify-center p-2 text-center">
                         <TransitionChild
-                            as="template"
-                            enter="duration-300 ease-out"
-                            enter-from="opacity-0 scale-95"
-                            enter-to="opacity-100 scale-100"
-                            leave="duration-200 ease-in"
-                            leave-from="opacity-100 scale-100"
-                            leave-to="opacity-0 scale-95"
+                                as="template"
+                                enter="duration-300 ease-out"
+                                enter-from="opacity-0 scale-95"
+                                enter-to="opacity-100 scale-100"
+                                leave="duration-200 ease-in"
+                                leave-from="opacity-100 scale-100"
+                                leave-to="opacity-0 scale-95"
                         >
                             <DialogPanel class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-[#242424] p-6 text-left align-middle shadow-xl transition-all">
                                 <VideoPlayer/>
+
+                                <div class="flex justify-end gap-2">
+                                    <button @click="approveClip" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                        Approve
+                                    </button>
+                                    <button @click="rejectClip" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                        Reject
+                                    </button>
+                                </div>
                             </DialogPanel>
                         </TransitionChild>
                     </div>
@@ -53,18 +62,18 @@
         </TransitionRoot>
     </div>
 
-    <!-- Popup Dialog -->
+  <!-- Popup Dialog -->
     <div>
         <TransitionRoot appear :show="openPopup" as="template">
             <Dialog as="div" @close="openPopup = false" class="relative z-10">
                 <TransitionChild
-                    as="template"
-                    enter="duration-300 ease-out"
-                    enter-from="opacity-0"
-                    enter-to="opacity-100"
-                    leave="duration-200 ease-in"
-                    leave-from="opacity-100"
-                    leave-to="opacity-0"
+                        as="template"
+                        enter="duration-300 ease-out"
+                        enter-from="opacity-0"
+                        enter-to="opacity-100"
+                        leave="duration-200 ease-in"
+                        leave-from="opacity-100"
+                        leave-to="opacity-0"
                 >
                     <div class="fixed inset-0 bg-black bg-opacity-25" />
                 </TransitionChild>
@@ -72,13 +81,13 @@
                 <div class="fixed inset-0 overflow-y-auto">
                     <div class="flex min-h-full items-center justify-center p-4 text-center">
                         <TransitionChild
-                            as="template"
-                            enter="duration-300 ease-out"
-                            enter-from="opacity-0 scale-95"
-                            enter-to="opacity-100 scale-100"
-                            leave="duration-200 ease-in"
-                            leave-from="opacity-100 scale-100"
-                            leave-to="opacity-0 scale-95"
+                                as="template"
+                                enter="duration-300 ease-out"
+                                enter-from="opacity-0 scale-95"
+                                enter-to="opacity-100 scale-100"
+                                leave="duration-200 ease-in"
+                                leave-from="opacity-100 scale-100"
+                                leave-to="opacity-0 scale-95"
                         >
                             <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#242424] p-6 text-left align-middle shadow-xl transition-all">
                                 <DialogTitle as="h3" class="text-lg font-semibold leading-6 text-white">
@@ -113,7 +122,7 @@ import Navbar from "../components/Navbar.vue";
 import VideoCardSkeleton from "../components/skeleton/VideoCardSkeleton.vue";
 
 export default {
-    name: "HomeView",
+    name: "ReviewView",
     components: {
         VideoCardSkeleton,
         Navbar, VideoPlayer, Dialog, TransitionRoot, DialogTitle, DialogPanel, TransitionChild, VideoCard},
@@ -146,30 +155,6 @@ export default {
             }
         })
 
-        if (this.$route.query.success === "true") {
-            this.$router.replace({query: {}})
-
-            this.popup =  {
-                title: "Clip submitted!",
-                message: "Your clip has been submitted for review. It will be added to the site shortly.",
-                button: "Got it, thanks!"
-            }
-
-            this.openPopup = true
-        }
-
-        if (this.$route.query.reason === "exists") {
-            this.$router.replace({query: {}})
-
-            this.popup =  {
-                title: "Clip already exists!",
-                message: "This clip has already been submitted to the site.",
-                button: "Got it"
-            }
-
-            this.openPopup = true
-        }
-
         window.addEventListener('scroll', () => {
             const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
@@ -184,14 +169,74 @@ export default {
 
             this.isLoadingClips = true;
 
-            fetch("https://valclips-db.hop.sh/clips-approved?startIndex=" + this.lastIndex + "&endIndex=" + (this.lastIndex + clips)).then(res => res.json()).then(data => {
-                this.loadedClips.push(...data)
+            fetch("https://valclips-db.hop.sh/clips?startIndex=" + this.lastIndex + "&endIndex=" + (this.lastIndex + clips)).then(res => res.json()).then(data => {
+                data = data.filter(clip => clip.approved === 0)
+                this.loadedClips = this.loadedClips.concat(data)
                 this.lastIndex += clips
 
                 this.isLoadingClips = false;
             }).catch(err => {
                 console.error(err)
                 this.isLoadingClips = false;
+            })
+        },
+        reloadClips() {
+            this.loadedClips = [];
+            this.lastIndex = 0;
+            this.loadClips(20);
+        },
+        approveClip() {
+            const headers = new Headers();
+            headers.append("key", localStorage.getItem("approve_key"));
+
+            fetch("https://valclips-db.hop.sh/approve/" + this.videoStore.video_data.id, {
+                method: "POST",
+                headers: headers
+            }).then(() => {
+                this.reloadClips();
+                this.videoStore.setPlaying(false);
+
+                this.popup = {
+                    title: "Clip Approved",
+                    message: "The clip has been approved and will be added to the database.",
+                    button: "Ok"
+                }
+                this.openPopup = true;
+            }).catch(err => {
+                console.error(err)
+                this.popup = {
+                    title: "Error",
+                    message: "An error occurred while approving the clip.",
+                    button: "Ok"
+                }
+                this.openPopup = true;
+            })
+        },
+        rejectClip() {
+            const headers = new Headers();
+            headers.append("key", localStorage.getItem("delete_key"));
+
+            fetch("https://valclips-db.hop.sh/delete/" + this.videoStore.video_data.id, {
+                method: "POST",
+                headers: headers
+            }).then(() => {
+                this.reloadClips();
+                this.videoStore.setPlaying(false);
+
+                this.popup = {
+                    title: "Clip Rejected",
+                    message: "The clip has been rejected and will not be added to the database.",
+                    button: "Ok"
+                }
+                this.openPopup = true;
+            }).catch(err => {
+                console.error(err)
+                this.popup = {
+                    title: "Error",
+                    message: "An error occurred while rejecting the clip.",
+                    button: "Ok"
+                }
+                this.openPopup = true;
             })
         },
         closePlayer() {
