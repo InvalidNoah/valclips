@@ -145,6 +145,11 @@ export default {
             }
         }
     },
+    beforeMount() {
+        if (!localStorage.getItem("approve_key") && !localStorage.getItem("delete_key")) {
+            this.$router.push("/")
+        }
+    },
     mounted() {
         this.loadClips(20);
 
