@@ -46,8 +46,8 @@
                             <DialogPanel class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-[#242424] p-6 text-left align-middle shadow-xl transition-all">
                                 <VideoPlayer/>
 
-                                <div class="flex justify-center gap-2 mt-4">
-                                    <button v-if="hasKey" @click="deleteClip" class="bg-red-600 hover:bg-red-700 text-white py-1.5 px-3 rounded transition duration-200">
+                                <div class="flex justify-center gap-2">
+                                    <button v-if="hasKey" @click="deleteClip" class="mt-4 bg-red-600 hover:bg-red-700 text-white py-1.5 px-3 rounded transition duration-200">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="currentColor"><path d="M280 936q-33 0-56.5-23.5T200 856V336h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680 936H280Zm80-160h80V416h-80v360Zm160 0h80V416h-80v360Z"/></svg>
                                     </button>
                                 </div>
