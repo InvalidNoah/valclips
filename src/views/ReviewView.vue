@@ -47,11 +47,11 @@
                                 <VideoPlayer/>
 
                                 <div class="flex justify-end gap-2">
-                                    <button @click="approveClip" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                        Approve
+                                    <button @click="approveClip" class="bg-green-600 hover:bg-green-700 text-white py-1.5 px-3 rounded transition duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="currentColor"><path d="M382 816 154 588l57-57 171 171 367-367 57 57-424 424Z"/></svg>
                                     </button>
-                                    <button @click="rejectClip" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                        Reject
+                                    <button @click="rejectClip" class="bg-red-600 hover:bg-red-700 text-white py-1.5 px-3 rounded transition duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="currentColor"><path d="m256 856-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                                     </button>
                                 </div>
                             </DialogPanel>
