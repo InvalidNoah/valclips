@@ -8,10 +8,10 @@
                     class="aspect-video rounded-md grow"
             ></iframe>
         </div>
-        <h1 class="text-base font-semibold truncate mt-2">
-            {{ videoStore.video_data.title }}
-        </h1>
-        <h1 class="text-gray-300">{{ videoStore.video_data.author_name }}</h1>
+<!--        <h1 class="text-base font-semibold truncate mt-2">-->
+<!--            {{ videoStore.video_data.title }}-->
+<!--        </h1>-->
+<!--        <h1 class="text-gray-300">{{ videoStore.video_data.author_name }}</h1>-->
     </div>
 </template>
 

@@ -46,7 +46,7 @@
                             <DialogPanel class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-[#242424] p-6 text-left align-middle shadow-xl transition-all">
                                 <VideoPlayer/>
 
-                                <div class="flex justify-end gap-2">
+                                <div class="flex justify-center gap-2 mt-4">
                                     <button @click="approveClip" class="bg-green-600 hover:bg-green-700 text-white py-1.5 px-3 rounded transition duration-200">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="currentColor"><path d="M382 816 154 588l57-57 171 171 367-367 57 57-424 424Z"/></svg>
                                     </button>
