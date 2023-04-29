@@ -1,7 +1,7 @@
 <template>
     <VideoCardSkeleton v-if="Object.keys(video_data).length === 0" />
 
-    <div class="mb-4">
+    <div class="mb-4" v-else>
         <!-- Video -->
         <div @click="setVideo" class="aspect-video bg-[#404040] flex items-end rounded-md hover:cursor-pointer">
             <img :src="video_data?.thumbnail_url?.replaceAll('hq', 'mq')" alt="" class="aspect-video rounded-md grow">
