@@ -3,7 +3,7 @@
 
     <!-- Video Cards -->
     <div class="container">
-        <h1 v-if="loadedClips.length <= 0" class="text-2xl text-white text-center mt-4">No clips to review</h1>
+        <h1 v-if="loadedClips.length <= 0 && !isLoadingClips" class="text-2xl text-white text-center mt-4">No clips to review</h1>
 
         <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-4">
             <VideoCard v-for="video in loadedClips"
