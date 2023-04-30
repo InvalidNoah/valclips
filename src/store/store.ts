@@ -22,10 +22,18 @@ export const useVideoStore = defineStore('video', {
 export const useVariablesStore = defineStore('variables', {
     state: () => ({
         show_submit_form: false,
+        show_search_form: false,
+        search_query: ""
     }),
     actions: {
         showSubmitForm(value: boolean) {
             this.show_submit_form = value
+        },
+        showSearchForm(value: boolean) {
+            this.show_search_form = value
+        },
+        setSearchQuery(value: string) {
+            this.search_query = value
         }
     }
 })

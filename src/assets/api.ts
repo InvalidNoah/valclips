@@ -86,6 +86,17 @@ async function deleteVideo(videoId: string, key: string) {
     return await response.text();
 }
 
+// Search for a video by query
+async function searchVideos(query: any, startIndex: number, endIndex: number) {
+    const response = await fetch(`${API_URL}/search/${query}?startIndex=${startIndex}&endIndex=${endIndex}`);
+
+    if (!response.ok) {
+        throw new Error(`Failed to search videos: ${response.statusText}`);
+    }
+
+    return await response.json();
+}
+
 async function getVideoData(videoId: string): Promise<VideoData> {
     const url = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`;
     const response = await fetch(url);
@@ -111,4 +122,5 @@ export {
     approveVideo,
     deleteVideo,
     getVideoData,
+    searchVideos
 }
