@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto mx-16 my-10">
+    <div class="mx-auto px-16 py-10">
         <h1 class="text-4xl font-bold mb-2">ValClips Privacy Policy</h1>
         <p>ValClips is committed to protecting the privacy of its users. This Privacy Policy explains how we collect, use, and disclose information about you when you use our website.</p>
 

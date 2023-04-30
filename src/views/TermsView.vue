@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto mx-16 my-10">
+    <div class="mx-auto px-16 py-10">
         <h1 class="text-4xl font-bold mb-6">ValClips Terms of Service</h1>
         <p>Welcome to ValClips, a website where users can submit and watch their valorant clips. By using ValClips, you agree to be bound by these Terms of Service ("Terms"), so please read them carefully.</p>
 
