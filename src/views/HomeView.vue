@@ -43,7 +43,7 @@
                             leave-from="opacity-100 scale-100"
                             leave-to="opacity-0 scale-95"
                         >
-                            <DialogPanel class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-[#242424] p-6 text-left align-middle shadow-xl transition-all">
+                            <DialogPanel class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-[#242424] p-1 md:p-5 text-left align-middle shadow-xl transition-all">
                                 <VideoPlayer/>
 
                                 <div class="flex justify-center gap-2">
