@@ -104,7 +104,7 @@
                                     <div class="mt-4 flex">
                                         <div class="grow"></div>
 
-                                        <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-1.5 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hover:cursor-wait" disabled>
+                                        <button type="submit" id="submit-button" class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-1.5 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hover:cursor-wait" disabled>
                                             Submit
                                         </button>
                                     </div>
@@ -145,8 +145,8 @@ export default {
     watch: {
         turnstileToken: function (val) {
             if (val) {
-                document.querySelector('button[type="submit"]').disabled = false;
-                document.querySelector('button[type="submit"]').classList.remove('hover:cursor-wait');
+                document.getElementById("submit-button").disabled = false;
+                document.getElementById("submit-button").classList.remove('hover:cursor-wait');
             }
         }
     },
