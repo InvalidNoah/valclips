@@ -1,9 +1,10 @@
 import {createRouter, createWebHistory} from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import ReviewView from "../views/ReviewView.vue";
-import TermsView from "../views/TermsView.vue";
-import PrivacyView from "../views/PrivacyView.vue";
-import SearchView from "../views/SearchView.vue";
+
+const ReviewView = () => import('../views/ReviewView.vue');
+const TermsView = () => import('../views/TermsView.vue');
+const PrivacyView = () => import('../views/PrivacyView.vue');
+const SearchView = () => import('../views/SearchView.vue');
 
 const routes = [
     { path: '/', component: HomeView },
