@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-between items-center h-16 bg-[#363636] text-white">
+    <nav class="fixed w-full top-0 z-10 flex justify-between items-center h-16 bg-[#363636] text-white transition-all duration-500 ease-in-out">
         <div class="flex items-center ml-8">
             <router-link to="/" class="flex items-center">
                 <h1 class="text-2xl font-semibold">ValClips</h1>
@@ -29,7 +29,9 @@
                 </svg>
             </button>
         </div>
-    </div>
+    </nav>
+
+    <div class="mt-20"></div>
 
     <SubmitForm />
     <SearchForm />
@@ -49,6 +51,29 @@ export default {
         const isAdmin = localStorage.getItem("approve_key") !== null && localStorage.getItem("delete_key") !== null;
 
         return {variablesStore, isAdmin}
+    },
+    data() {
+        return {
+            prevScrollpos: window.pageYOffset,
+        }
+    },
+    mounted() {
+        window.onscroll = function() {
+            const currentScrollPos = window.pageYOffset;
+            const navbar = document.querySelector("nav");
+
+            if (this.prevScrollpos > currentScrollPos) {
+                // show navbar
+                navbar.classList.add("translate-y-0");
+                navbar.classList.remove("-translate-y-full");
+            } else {
+                // hide navbar
+                navbar.classList.add("-translate-y-full");
+                navbar.classList.remove("translate-y-0");
+            }
+
+            this.prevScrollpos = currentScrollPos;
+        };
     },
     methods: {
         openSubmitForm() {
