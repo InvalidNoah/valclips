@@ -3,7 +3,7 @@
 
     <!-- Video Cards -->
     <div class="container">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 my-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 mt-4 mb-1">
             <VideoCardSkeleton v-if="loadedClips.length <= 0" v-for="i in 20"/>
 
             <VideoCard v-else v-for="video in loadedClips"
@@ -112,6 +112,15 @@
             </Dialog>
         </TransitionRoot>
     </div>
+
+    <!-- Loading spinner -->
+    <div v-if="showLoadingSpinner" class="flex justify-center mb-6">
+        <div class="loader">
+            <svg class="circular">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+            </svg>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -162,7 +171,8 @@ export default {
                 message: "",
                 button: ""
             },
-            hasKey: false
+            hasKey: false,
+            showLoadingSpinner: false
         }
     },
     mounted() {
@@ -214,6 +224,7 @@ export default {
             const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
             if (scrollTop + clientHeight >= scrollHeight) {
+                this.showLoadingSpinner = true;
                 this.loadClips(10);
             }
         });
@@ -235,6 +246,7 @@ export default {
                 console.error(err)
             }).finally(() => {
                 this.isLoadingClips = false;
+                this.showLoadingSpinner = false;
             });
 
         },
@@ -285,5 +297,46 @@ export default {
 </script>
 
 <style scoped>
+.loader {
+    position: relative;
+    margin: 0px auto;
+    width: 100px;
+    height: 100px;
+    zoom: 1;
+}
 
+.circular {
+    animation: rotate 1s linear infinite;
+    height: 100px;
+    position: relative;
+    width: 100px;
+}
+
+.path {
+    stroke: gray;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite;
+    stroke-linecap: round;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+    }
+}
 </style>
