@@ -14,8 +14,13 @@ const routes = [
     {
         path: '/review',
         component: ReviewView,
-        beforeEnter: () => {
-            return !(!localStorage.getItem("approve_key") && !localStorage.getItem("delete_key"));
+        beforeEnter: (to, from, next) => {
+            if (!(!localStorage.getItem("approve_key") && !localStorage.getItem("delete_key"))) {
+                return true;
+            }
+
+            next({path: '/'}); // redirect to home
+            return false;
         },
     },
     {
@@ -30,6 +35,11 @@ const routes = [
         path: '/search',
         component: SearchView
     },
+    {
+        path: '/:pathMatch(.*)*', // 404
+        name: 'NotFound',
+        component: () => import('../views/404View.vue')
+    }
 ]
 
 const router = createRouter({
