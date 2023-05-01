@@ -43,16 +43,20 @@
                             leave-from="opacity-100 scale-100"
                             leave-to="opacity-0 scale-95"
                         >
-                            <DialogPanel class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-[#242424] p-6 text-left align-middle shadow-xl transition-all">
-                                <VideoPlayer/>
+                            <DialogPanel class="transform overflow-hidden w-full max-w-4xl align-middle transition-all">
+                                <div class="rounded-lg md:rounded-xl bg-[#242424] p-1 md:p-5 text-left">
+                                    <VideoPlayer/>
+                                </div>
 
-                                <div class="flex justify-center gap-2 mt-4">
-                                    <button @click="approveClip" class="bg-green-600 hover:bg-green-700 text-white py-1.5 px-3 rounded transition duration-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="currentColor"><path d="M382 816 154 588l57-57 171 171 367-367 57 57-424 424Z"/></svg>
-                                    </button>
-                                    <button @click="rejectClip" class="bg-red-600 hover:bg-red-700 text-white py-1.5 px-3 rounded transition duration-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="currentColor"><path d="m256 856-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-                                    </button>
+                                <div class="mt-2 rounded-lg md:rounded-xl bg-[#242424] p-2 text-left">
+                                    <div class="flex justify-center gap-2">
+                                        <button @click="approveClip" class="bg-green-600 hover:bg-green-700 text-white py-1.5 px-3 rounded transition duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="currentColor"><path d="M382 816 154 588l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+                                        </button>
+                                        <button @click="rejectClip" class="bg-red-600 hover:bg-red-700 text-white py-1.5 px-3 rounded transition duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="currentColor"><path d="m256 856-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </DialogPanel>
                         </TransitionChild>
