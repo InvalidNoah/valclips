@@ -17,11 +17,10 @@ const routes = [
         // @ts-ignore
         beforeEnter: (to, from, next) => {
             if (!(!localStorage.getItem("approve_key") && !localStorage.getItem("delete_key"))) {
-                return true;
+                next();
             }
 
             next({path: '/'}); // redirect to home
-            return false;
         },
     },
     {
