@@ -7,11 +7,29 @@ const PrivacyView = () => import('../views/PrivacyView.vue');
 const SearchView = () => import('../views/SearchView.vue');
 
 const routes = [
-    { path: '/', component: HomeView },
-    { path: '/review', component: ReviewView },
-    { path: '/terms', component: TermsView },
-    { path: '/privacy', component: PrivacyView },
-    { path: '/search', component: SearchView },
+    {
+        path: '/',
+        component: HomeView
+    },
+    {
+        path: '/review',
+        component: ReviewView,
+        beforeEnter: () => {
+            return !(!localStorage.getItem("approve_key") && !localStorage.getItem("delete_key"));
+        },
+    },
+    {
+        path: '/terms',
+        component: TermsView
+    },
+    {
+        path: '/privacy',
+        component: PrivacyView
+    },
+    {
+        path: '/search',
+        component: SearchView
+    },
 ]
 
 const router = createRouter({
