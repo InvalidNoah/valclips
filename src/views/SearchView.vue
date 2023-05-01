@@ -179,26 +179,6 @@ export default {
             }
         })
 
-        if (this.$route.query.success === "true") {
-            this.$router.replace({query: {}})
-
-            this.openDialog(
-                "Clip submitted!",
-                "Your clip has been submitted for review. It will be added to the site shortly.",
-                "Got it, thanks!"
-            )
-        }
-
-        if (this.$route.query.reason === "exists") {
-            this.$router.replace({query: {}})
-
-            this.openDialog(
-                "Clip already exists!",
-                "This clip has already been submitted to the site.",
-                "Got it"
-            )
-        }
-
         window.addEventListener('scroll', () => {
             const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
