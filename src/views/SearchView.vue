@@ -3,6 +3,8 @@
 
     <!-- Video Cards -->
     <div class="container">
+        <h1 class="text-base text-gray-100 mt-4">Searching for "{{ searchQuery }}"</h1>
+
         <h1 v-if="loadedClips.length <= 0 && !isLoadingClips" class="text-2xl text-white text-center mt-4">No clips found</h1>
 
         <div v-if="loadedClips.length <= 0 && isLoadingClips" role="status" class="flex justify-center mt-4">
