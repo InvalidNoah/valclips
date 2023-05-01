@@ -3,7 +3,7 @@
 
     <!-- Video Cards -->
     <div class="container">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 my-4">
             <VideoCardSkeleton v-if="loadedClips.length <= 0" v-for="i in 20"/>
 
             <VideoCard v-else v-for="video in loadedClips"
