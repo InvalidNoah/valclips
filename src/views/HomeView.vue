@@ -174,6 +174,16 @@ export default {
             )
         }
 
+        if (this.$route.query.reason === "invalid") {
+            this.$router.replace({query: {}})
+
+            this.openDialog(
+                "Invalid clip!",
+                "This clip is invalid and cannot be submitted to the site.",
+                "Got it"
+            )
+        }
+
         window.addEventListener('scroll', () => {
             const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
