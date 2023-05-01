@@ -14,6 +14,7 @@ const routes = [
     {
         path: '/review',
         component: ReviewView,
+        // @ts-ignore
         beforeEnter: (to, from, next) => {
             if (!(!localStorage.getItem("approve_key") && !localStorage.getItem("delete_key"))) {
                 return true;
