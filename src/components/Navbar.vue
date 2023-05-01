@@ -10,7 +10,7 @@
             <form @submit.prevent="search" class="flex">
                 <input v-model="variablesStore.search_query" type="text" id="search" name="search" class="w-full px-3 rounded-l-lg bg-[#2e2e2e] border border-[#505050] focus:border-blue-500 focus:outline-none focus:shadow-outline-blue" placeholder="Search" autocomplete="off" required>
 
-                <button type="submit" class="flex items-center bg-[#272727] hover:bg-[#202020] rounded-r-md py-1.5 px-3 border border-l-[0px] border-[#505050] hover:cursor-pointer">
+                <button type="submit" name="search-button" class="flex items-center bg-[#272727] hover:bg-[#202020] rounded-r-md py-1.5 px-3 border border-l-[0px] border-[#505050] hover:cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-200" height="24" viewBox="0 96 960 960" width="24" fill="currentColor"><path d="M784 936 532 684q-30 24-69 38t-83 14q-109 0-184.5-75.5T120 476q0-109 75.5-184.5T380 216q109 0 184.5 75.5T640 476q0 44-14 83t-38 69l252 252-56 56ZM380 656q75 0 127.5-52.5T560 476q0-75-52.5-127.5T380 296q-75 0-127.5 52.5T200 476q0 75 52.5 127.5T380 656Z"/></svg>
                 </button>
             </form>
