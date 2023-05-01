@@ -53,14 +53,13 @@ export default {
     },
     mounted() {
         api.getVideoData(this.video_id).then(data => {
-            this.video_data = {
-                ...this.video_data,
-                ...data
-            }
+            this.video_data = data;
         });
     },
     methods: {
         setVideo() {
+            this.$router.replace({query: {v: this.video_id}})
+
             this.videoStore.setVideoData(this.video_data)
             this.videoStore.setPlaying(true)
         }

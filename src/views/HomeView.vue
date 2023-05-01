@@ -122,14 +122,25 @@ import {useVideoStore} from "../store/store.ts";
 import Navbar from "../components/Navbar.vue";
 import VideoCardSkeleton from "../components/skeleton/VideoCardSkeleton.vue";
 import * as api from "../assets/api.ts"
+import { useRoute } from 'vue-router'
 
 export default {
     name: "HomeView",
     components: {
         VideoCardSkeleton,
-        Navbar, VideoPlayer, Dialog, TransitionRoot, DialogTitle, DialogPanel, TransitionChild, VideoCard},
+        Navbar, VideoPlayer, Dialog, TransitionRoot, DialogTitle, DialogPanel, TransitionChild, VideoCard
+    },
     setup() {
         const videoStore = useVideoStore()
+        const route = useRoute()
+
+        if (route.query.v !== undefined) {
+            api.getVideoData(route.query.v).then(data => {
+                videoStore.setVideoData(data);
+                videoStore.setPlaying(true);
+            });
+        }
+
         return {videoStore}
     },
     data() {
@@ -149,6 +160,10 @@ export default {
     },
     mounted() {
         this.loadClips(20);
+
+        if (this.videoStore.is_playing) {
+            this.openPlayer()
+        }
 
         this.videoStore.$subscribe((mutation, state) => {
             if (state.is_playing) {
@@ -217,6 +232,8 @@ export default {
 
         },
         closePlayer() {
+            this.$router.replace({query: {}})
+
             this.isPlayerOpen = false;
             this.videoStore.setPlaying(false)
         },
