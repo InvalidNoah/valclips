@@ -122,7 +122,7 @@ import {useVideoStore} from "../store/store.ts";
 import Navbar from "../components/Navbar.vue";
 import VideoCardSkeleton from "../components/skeleton/VideoCardSkeleton.vue";
 import * as api from "../assets/api.ts"
-import { useRoute } from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 
 export default {
     name: "HomeView",
@@ -133,11 +133,18 @@ export default {
     setup() {
         const videoStore = useVideoStore()
         const route = useRoute()
+        const router = useRouter()
 
         if (route.query.v !== undefined) {
-            api.getVideoData(route.query.v).then(data => {
-                videoStore.setVideoData(data);
-                videoStore.setPlaying(true);
+            api.getVideo(route.query.v).then(data => {
+                if (Object.keys(data).length === 0) {
+                    router.replace({query: {}})
+                } else {
+                    api.getVideoData(route.query.v).then(data => {
+                        videoStore.setVideoData(data);
+                        videoStore.setPlaying(true);
+                    });
+                }
             });
         }
 

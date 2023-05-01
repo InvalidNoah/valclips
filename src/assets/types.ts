@@ -8,3 +8,13 @@ interface VideoData {
     thumbnail_width: number;
     thumbnail_height: number;
 }
+
+interface Clip {
+    approved: boolean;
+    author: string;
+    video_id: string;
+    video_title: string;
+    views: number;
+    likes: number;
+    timestamp: any;
+}

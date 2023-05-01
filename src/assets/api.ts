@@ -97,6 +97,16 @@ async function searchVideos(query: any, startIndex: number, endIndex: number) {
     return await response.json();
 }
 
+async function getVideo(videoId: string): Promise<Clip|Object> {
+    const response = await fetch(`${API_URL}/clip/${videoId}`);
+
+    if (!response.ok) {
+        throw new Error(`Failed to get video: ${response.statusText}`);
+    }
+
+    return await response.json();
+}
+
 async function getVideoData(videoId: string): Promise<VideoData> {
     const url = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`;
     const response = await fetch(url);
@@ -122,5 +132,6 @@ export {
     approveVideo,
     deleteVideo,
     getVideoData,
-    searchVideos
+    searchVideos,
+    getVideo,
 }
