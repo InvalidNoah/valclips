@@ -183,6 +183,11 @@ export default {
     watch: {
         '$route.params.id': function (id) {
             if (id !== undefined) {
+                if (this.videoStore?.video_data?.id === id) {
+                    this.videoStore.setPlaying(true);
+                    return;
+                }
+
                 api.getVideo(id).then(data => {
                     if (Object.keys(data).length === 0) {
                         this.$router.replace({name: "NotFound"})
@@ -205,6 +210,10 @@ export default {
 
         this.videoStore.$subscribe((mutation, state) => {
             if (state.is_playing) {
+                if (state.video_data === null) {
+                    return;
+                }
+
                 this.openPlayer()
             } else {
                 this.closePlayer()
