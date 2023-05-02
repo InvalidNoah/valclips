@@ -12,7 +12,8 @@
     "pinia": "^2.0.35",
     "vue": "^3.2.47",
     "vue-router": "4",
-    "vue-turnstile": "^1.0.0"
+    "vue-turnstile": "^1.0.0",
+    "vue3-popper": "^1.5.0"
   },
   "devDependencies": {
     "@headlessui/vue": "^1.7.13",

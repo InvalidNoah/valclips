@@ -14,6 +14,20 @@
   -webkit-text-size-adjust: 100%;
 }
 
+/* Popper style */
+:root {
+  --popper-theme-background-color: #3d3d3d;
+  --popper-theme-background-color-hover: #3d3d3d;
+  --popper-theme-text-color: #ffffff;
+  --popper-theme-border-width: 0px;
+  --popper-theme-border-style: solid;
+  --popper-theme-border-radius: 6px;
+  --popper-theme-padding: 5px 10px;
+}
+:root .popper {
+  font-size: 0.9rem;
+}
+
 body {
   font-family: 'Inter', sans-serif !important;
 }
