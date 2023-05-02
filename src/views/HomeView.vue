@@ -150,16 +150,23 @@ export default {
 
         const videoId = route.params.id;
         if (videoId !== undefined) {
-            api.getVideo(videoId).then(data => {
-                if (Object.keys(data).length === 0) {
-                    router.replace({name: "NotFound"})
-                } else {
-                    api.getVideoData(videoId).then(data => {
-                        videoStore.setVideoData(data);
-                        videoStore.setPlaying(true);
-                    });
-                }
-            });
+            if (videoStore.isVideoLoaded(videoId)) {
+                videoStore.setPlayingVideoId(videoId);
+                videoStore.setPlaying(true);
+            } else {
+                api.getVideo(videoId).then(data => {
+                    if (Object.keys(data).length === 0) {
+                        router.replace({name: "NotFound"})
+                    } else {
+                        api.getVideoData(videoId).then(data => {
+                            videoStore.putLoadedVideo(videoId, data);
+
+                            videoStore.setPlayingVideoId(videoId);
+                            videoStore.setPlaying(true);
+                        });
+                    }
+                });
+            }
         }
 
         return {videoStore}
@@ -183,22 +190,28 @@ export default {
     watch: {
         '$route.params.id': function (id) {
             if (id !== undefined) {
-                if (this.videoStore?.video_data?.id === id) {
+                if ((this.videoStore.playing_video_id === id) && (!this.videoStore.is_playing)) {
                     this.videoStore.setPlaying(true);
                     return;
                 }
 
-                this.videoStore.setPlaying(true);
+                if (this.videoStore.isVideoLoaded(id)) {
+                    this.videoStore.setPlayingVideoId(id);
+                    this.videoStore.setPlaying(true);
+                } else {
+                    api.getVideo(id).then(data => {
+                        if (Object.keys(data).length === 0) {
+                            this.$router.replace({name: "NotFound"})
+                        } else {
+                            api.getVideoData(id).then(data => {
+                                this.videoStore.putLoadedVideo(id, data);
 
-                api.getVideo(id).then(data => {
-                    if (Object.keys(data).length === 0) {
-                        this.$router.replace({name: "NotFound"})
-                    } else {
-                        api.getVideoData(id).then(data => {
-                            this.videoStore.setVideoData(data);
-                        });
-                    }
-                });
+                                this.videoStore.setPlayingVideoId(id);
+                                this.videoStore.setPlaying(true);
+                            });
+                        }
+                    });
+                }
             }
         }
     },
@@ -301,7 +314,7 @@ export default {
             this.loadClips(20);
         },
         deleteClip() {
-            api.deleteVideo(this.videoStore.video_data.id, localStorage.getItem("delete_key")).then(() => {
+            api.deleteVideo(this.videoStore.playing_video_id, localStorage.getItem("delete_key")).then(() => {
                 this.openDialog(
                     "Clip deleted!",
                     "The clip has been deleted.",

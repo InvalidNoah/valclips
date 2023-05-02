@@ -231,7 +231,7 @@ export default {
             this.loadClips(20);
         },
         deleteClip() {
-            api.deleteVideo(this.videoStore.video_data.id, localStorage.getItem("delete_key")).then(() => {
+            api.deleteVideo(this.videoStore.playing_video_id, localStorage.getItem("delete_key")).then(() => {
                 this.openDialog(
                     "Clip deleted!",
                     "The clip has been deleted.",

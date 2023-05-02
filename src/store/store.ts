@@ -2,21 +2,31 @@ import { defineStore } from 'pinia'
 
 export const useVideoStore = defineStore('video', {
     state: () => ({
-        video_data: null as VideoData | null,
+        loaded_video: new Map<string, VideoData>(),
+        playing_video_id: null as string | null,
         is_playing: false,
     }),
     actions: {
-        setVideoData(video: VideoData) {
-            this.video_data = video
+        setPlayingVideoId(video_id: string) {
+            this.playing_video_id = video_id
         },
         setPlaying(value: boolean) {
             if (this.is_playing === value) return
-            
+
             this.is_playing = value
         },
         clear() {
-            this.video_data = null
+            this.playing_video_id = null
             this.is_playing = false
+        },
+        putLoadedVideo(video_id: string, video_data: VideoData) {
+            this.loaded_video.set(video_id, video_data)
+        },
+        isVideoLoaded(video_id: string) {
+            return this.loaded_video.has(video_id)
+        },
+        getLoadedVideo(video_id: string) {
+            return this.loaded_video.get(video_id)
         }
     }
 })

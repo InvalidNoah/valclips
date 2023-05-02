@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="aspect-video bg-gray-500 flex items-end rounded-md">
-            <iframe :src="'https://www.youtube.com/embed/' + videoStore.video_data.id + '?autoplay=1'"
+            <iframe :src="'https://www.youtube.com/embed/' + videoStore.playing_video_id + '?autoplay=1'"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
@@ -9,9 +9,9 @@
             ></iframe>
         </div>
 <!--        <h1 class="text-base font-semibold truncate mt-2">-->
-<!--            {{ videoStore.video_data.title }}-->
+<!--            {{ videoStore.getLoadedVideo(this.video_id).title }}-->
 <!--        </h1>-->
-<!--        <h1 class="text-gray-300">{{ videoStore.video_data.author_name }}</h1>-->
+<!--        <h1 class="text-gray-300">{{ videoStore.getLoadedVideo(this.video_id).author_name }}</h1>-->
     </div>
 </template>
 
