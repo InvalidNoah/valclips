@@ -52,7 +52,7 @@
                                     <VideoPlayer/>
                                 </div>
 
-                                <div v-if="hasKey" class="mt-2 rounded-lg md:rounded-xl bg-[#242424] p-2 text-left">
+                                <div v-if="showAdminControl" class="mt-2 rounded-lg md:rounded-xl bg-[#242424] p-2 text-left">
                                     <div class="flex justify-center gap-2">
                                         <button @click="deleteClip" class="bg-red-600 hover:bg-red-700 text-white py-1.5 px-3 rounded transition duration-200">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="currentColor"><path d="M280 936q-33 0-56.5-23.5T200 856V336h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680 936H280Zm80-160h80V416h-80v360Zm160 0h80V416h-80v360Z"/></svg>
@@ -135,7 +135,6 @@ import {useVideoStore} from "../store/store.ts";
 import Navbar from "../components/Navbar.vue";
 import VideoCardSkeleton from "../components/skeleton/VideoCardSkeleton.vue";
 import * as api from "../assets/api.ts"
-import {useRoute, useRouter} from 'vue-router'
 
 export default {
     name: "HomeView",
@@ -145,29 +144,6 @@ export default {
     },
     setup() {
         const videoStore = useVideoStore()
-        const route = useRoute()
-        const router = useRouter()
-
-        const videoId = route.params.id;
-        if (videoId !== undefined) {
-            if (videoStore.isVideoLoaded(videoId)) {
-                videoStore.setPlayingVideoId(videoId);
-                videoStore.setPlaying(true);
-            } else {
-                api.getVideo(videoId).then(data => {
-                    if (Object.keys(data).length === 0) {
-                        router.replace({name: "NotFound"})
-                    } else {
-                        api.getVideoData(videoId).then(data => {
-                            videoStore.putLoadedVideo(videoId, data);
-
-                            videoStore.setPlayingVideoId(videoId);
-                            videoStore.setPlaying(true);
-                        });
-                    }
-                });
-            }
-        }
 
         return {videoStore}
     },
@@ -183,8 +159,8 @@ export default {
                 message: "",
                 button: ""
             },
-            hasKey: false,
-            showLoadingSpinner: false
+            showLoadingSpinner: false,
+            showAdminControl: false,
         }
     },
     watch: {
@@ -194,33 +170,17 @@ export default {
                     this.videoStore.setPlaying(true);
                     return;
                 }
-
-                if (this.videoStore.isVideoLoaded(id)) {
-                    this.videoStore.setPlayingVideoId(id);
-                    this.videoStore.setPlaying(true);
-                } else {
-                    api.getVideo(id).then(data => {
-                        if (Object.keys(data).length === 0) {
-                            this.$router.replace({name: "NotFound"})
-                        } else {
-                            api.getVideoData(id).then(data => {
-                                this.videoStore.putLoadedVideo(id, data);
-
-                                this.videoStore.setPlayingVideoId(id);
-                                this.videoStore.setPlaying(true);
-                            });
-                        }
-                    });
-                }
+                this.playClip(id);
             }
         }
     },
     mounted() {
-        this.loadClips(20);
-
-        if (this.videoStore.is_playing) {
-            this.openPlayer()
+        const videoId = this.$route.params.id;
+        if (videoId !== undefined) {
+            this.playClip(videoId);
         }
+
+        this.loadClips(20);
 
         this.videoStore.$subscribe((mutation, state) => {
             if (state.is_playing) {
@@ -230,36 +190,9 @@ export default {
             }
         })
 
-        if (this.$route.query.success === "true") {
-            this.$router.replace({query: {}})
+        this.handleRouteQuery();
 
-            this.openDialog(
-                "Clip submitted!",
-                "Your clip has been submitted for review. It will be added to the site shortly.",
-                "Got it, thanks!"
-            )
-        }
-
-        if (this.$route.query.reason === "exists") {
-            this.$router.replace({query: {}})
-
-            this.openDialog(
-                "Clip already exists!",
-                "This clip has already been submitted to the site.",
-                "Got it"
-            )
-        }
-
-        if (this.$route.query.reason === "invalid") {
-            this.$router.replace({query: {}})
-
-            this.openDialog(
-                "Invalid clip!",
-                "This clip is invalid and cannot be submitted to the site.",
-                "Got it"
-            )
-        }
-
+        // Infinite scroll
         window.addEventListener('scroll', () => {
             const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
@@ -269,9 +202,11 @@ export default {
             }
         });
 
-        if (localStorage.getItem("delete_key") !== null) {
-            this.hasKey = true
+        if (this.videoStore.is_playing) {
+            this.openPlayer()
         }
+
+        this.showAdminControl = localStorage.getItem('delete_key') !== null || localStorage.getItem("approve_key") !== null;
     },
     methods: {
         loadClips(clips) {
@@ -331,6 +266,56 @@ export default {
                 this.videoStore.setPlaying(false);
                 this.reloadClips();
             })
+        },
+        playClip(videoId) {
+            if (this.videoStore.isVideoLoaded(videoId)) {
+                this.videoStore.setPlayingVideoId(videoId);
+                this.videoStore.setPlaying(true);
+            } else {
+                api.getVideo(videoId).then(data => {
+                    if (Object.keys(data).length === 0) {
+                        this.$router.replace({name: "NotFound"})
+                    } else {
+                        api.getVideoData(videoId).then(data => {
+                            this.videoStore.putLoadedVideo(videoId, data);
+
+                            this.videoStore.setPlayingVideoId(videoId);
+                            this.videoStore.setPlaying(true);
+                        });
+                    }
+                });
+            }
+        },
+        handleRouteQuery() {
+            if (this.$route.query.success === "true") {
+                this.$router.replace({query: {}})
+
+                this.openDialog(
+                    "Clip submitted!",
+                    "Your clip has been submitted for review. It will be added to the site shortly.",
+                    "Got it, thanks!"
+                )
+            }
+
+            if (this.$route.query.reason === "exists") {
+                this.$router.replace({query: {}})
+
+                this.openDialog(
+                    "Clip already exists!",
+                    "This clip has already been submitted to the site.",
+                    "Got it"
+                )
+            }
+
+            if (this.$route.query.reason === "invalid") {
+                this.$router.replace({query: {}})
+
+                this.openDialog(
+                    "Invalid clip!",
+                    "This clip is invalid and cannot be submitted to the site.",
+                    "Got it"
+                )
+            }
         }
     }
 }
