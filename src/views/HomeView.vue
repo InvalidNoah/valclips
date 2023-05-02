@@ -11,6 +11,7 @@
                     <VideoCard
                                :key="video.video_id"
                                :video_id="video.video_id"
+                               :video_title="video.video_title"
                                :views="video.views"
                                :likes="video.likes"
                                :author="video.author"
