@@ -44,9 +44,11 @@ export default {
     setup(props) {
         const videoStore = useVideoStore()
 
-        api.getVideoData(props.video_id).then(data => {
-            videoStore.putLoadedVideo(props.video_id, data);
-        });
+        if (!videoStore.isVideoLoaded(props.video_id)) {
+            api.getVideoData(props.video_id).then(data => {
+                videoStore.putLoadedVideo(props.video_id, data);
+            });
+        }
 
         return {videoStore}
     },
