@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="aspect-video bg-gray-500 flex items-end rounded-md">
+        <div class="aspect-video bg-[#404040] flex items-end rounded-md">
             <iframe :src="'https://www.youtube.com/embed/' + videoStore.playing_video_id + '?autoplay=1'"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
