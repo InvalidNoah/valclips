@@ -183,13 +183,19 @@ export default {
     watch: {
         '$route.params.id': function (id) {
             if (id !== undefined) {
+                if (this.videoStore?.video_data?.id === id) {
+                    this.videoStore.setPlaying(true);
+                    return;
+                }
+
+                this.videoStore.setPlaying(true);
+
                 api.getVideo(id).then(data => {
                     if (Object.keys(data).length === 0) {
                         this.$router.replace({name: "NotFound"})
                     } else {
                         api.getVideoData(id).then(data => {
                             this.videoStore.setVideoData(data);
-                            this.videoStore.setPlaying(true);
                         });
                     }
                 });

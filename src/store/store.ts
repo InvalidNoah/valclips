@@ -10,6 +10,8 @@ export const useVideoStore = defineStore('video', {
             this.video_data = video
         },
         setPlaying(value: boolean) {
+            if (this.is_playing === value) return
+            
             this.is_playing = value
         },
         clear() {
