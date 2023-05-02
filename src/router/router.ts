@@ -12,6 +12,10 @@ const routes = [
         component: HomeView
     },
     {
+        path: '/clip/:id',
+        component: HomeView
+    },
+    {
         path: '/review',
         component: ReviewView,
         // @ts-ignore

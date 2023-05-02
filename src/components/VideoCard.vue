@@ -58,8 +58,6 @@ export default {
     },
     methods: {
         setVideo() {
-            this.$router.replace({query: {v: this.video_id}})
-
             this.videoStore.setVideoData(this.video_data)
             this.videoStore.setPlaying(true)
         }

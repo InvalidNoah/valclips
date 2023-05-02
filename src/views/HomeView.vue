@@ -6,13 +6,17 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 mt-4 mb-1">
             <VideoCardSkeleton v-if="loadedClips.length <= 0" v-for="i in 20"/>
 
-            <VideoCard v-else v-for="video in loadedClips"
-                       :key="video.video_id"
-                       :video_id="video.video_id"
-                       :views="video.views"
-                       :likes="video.likes"
-                       :author="video.author"
-            />
+            <div v-else v-for="video in loadedClips">
+                <router-link :to="'/clip/' + video.video_id">
+                    <VideoCard
+                               :key="video.video_id"
+                               :video_id="video.video_id"
+                               :views="video.views"
+                               :likes="video.likes"
+                               :author="video.author"
+                    />
+                </router-link>
+            </div>
         </div>
     </div>
 
@@ -144,12 +148,13 @@ export default {
         const route = useRoute()
         const router = useRouter()
 
-        if (route.query.v !== undefined) {
-            api.getVideo(route.query.v).then(data => {
+        const videoId = route.params.id;
+        if (videoId !== undefined) {
+            api.getVideo(videoId).then(data => {
                 if (Object.keys(data).length === 0) {
-                    router.replace({query: {}})
+                    router.replace({name: "NotFound"})
                 } else {
-                    api.getVideoData(route.query.v).then(data => {
+                    api.getVideoData(videoId).then(data => {
                         videoStore.setVideoData(data);
                         videoStore.setPlaying(true);
                     });
@@ -173,6 +178,22 @@ export default {
             },
             hasKey: false,
             showLoadingSpinner: false
+        }
+    },
+    watch: {
+        '$route.params.id': function (id) {
+            if (id !== undefined) {
+                api.getVideo(id).then(data => {
+                    if (Object.keys(data).length === 0) {
+                        this.$router.replace({name: "NotFound"})
+                    } else {
+                        api.getVideoData(id).then(data => {
+                            this.videoStore.setVideoData(data);
+                            this.videoStore.setPlaying(true);
+                        });
+                    }
+                });
+            }
         }
     },
     mounted() {
@@ -251,7 +272,7 @@ export default {
 
         },
         closePlayer() {
-            this.$router.replace({query: {}})
+            this.$router.replace({path: '/'})
 
             this.isPlayerOpen = false;
             this.videoStore.setPlaying(false)
