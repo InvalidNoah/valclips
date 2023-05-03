@@ -172,6 +172,8 @@ export default {
                     return;
                 }
                 this.playClip(id);
+            } else {
+                this.videoStore.setPlaying(false);
             }
         }
     },
