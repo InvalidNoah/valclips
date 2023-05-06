@@ -2,7 +2,7 @@
     <nav class="fixed w-full top-0 z-10 flex justify-between items-center h-16 bg-[#363636] text-white transition-all duration-500 ease-in-out">
         <div class="flex items-center ml-8">
             <router-link to="/" class="flex items-center">
-                <h1 class="text-2xl font-semibold">ValClips</h1>
+                <h1 class="text-2xl font-semibold">NoahClips</h1>
             </router-link>
         </div>
 
