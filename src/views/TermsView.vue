@@ -1,7 +1,7 @@
 <template>
     <div class="mx-auto px-16 py-10">
-        <h1 class="text-4xl font-bold mb-6">ValClips Terms of Service</h1>
-        <p>Welcome to ValClips, a website where users can submit and watch their valorant clips. By using ValClips, you agree to be bound by these Terms of Service ("Terms"), so please read them carefully.</p>
+        <h1 class="text-4xl font-bold mb-6">NoahClips Terms of Service</h1>
+        <p>Welcome to NoahClips, a website where users can submit and watch their valorant clips. By using ValClips, you agree to be bound by these Terms of Service ("Terms"), so please read them carefully.</p>
 
         <h2 class="text-2xl font-bold my-6">User Conduct</h2>
         <p>When using ValClips, you agree to comply with all applicable laws and regulations, as well as these Terms. Specifically, you agree that you will not:</p>
