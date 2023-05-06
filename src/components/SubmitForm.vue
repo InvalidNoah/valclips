@@ -97,9 +97,7 @@
                                         <input v-model="video_url" type="text" id="video_id" name="video_id" class="w-full px-3 py-2 rounded-lg bg-[#2e2e2e] border border-transparent focus:border-blue-500 focus:outline-none focus:shadow-outline-blue" placeholder="Enter the YouTube video url" autocomplete="off" required>
                                     </div>
 
-                                    <div>
-                                        <VueTurnstile site-key="0x4AAAAAAAETCDBYh9DTANun" v-model="turnstileToken" />
-                                    </div>
+                                    
 
                                     <div class="mt-4 flex">
                                         <div class="grow"></div>
